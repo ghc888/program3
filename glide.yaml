@@ -1,0 +1,4 @@
+package: program3
+import:
+- package: github.com/satori/go.uuid
+- package: gopkg.in/yaml.v2
