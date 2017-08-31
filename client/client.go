@@ -27,7 +27,7 @@ func main() {
 	}
 
 	var commandFlag uint32=CLIENT_FILE
-	fileName:="1.txt0"
+	fileName:="1.txt"
 	buffer:=make([]byte,4,4+len(fileName))
 
 

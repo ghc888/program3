@@ -8,6 +8,8 @@ import (
 
 
 	"encoding/binary"
+
+	"bytes"
 )
 const (
 
@@ -94,6 +96,11 @@ func (c *ClientConn)ReadHandshakeResponse()error{
 
 
 	pos+=4
+
+	 //filename := string(data[pos : pos+bytes.IndexByte(data[pos:], 0)])
+	fmt.Println(data[pos:])
+	fmt.Println(bytes.IndexByte(data[pos:], 0))
+	fmt.Println("filename :",string(data[pos:]))
 	return  nil
 }
 
