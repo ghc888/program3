@@ -7,12 +7,6 @@ import (
 	"program3/connectionManager"
 )
 
-const (
-
-	CLIENT_LONG_PASSWORD uint32 = 1 << iota
-	CLIENT_FILE
-	CLIENT_REGISTER
-)
 
 func main() {
 
@@ -26,12 +20,12 @@ func main() {
 		fmt.Println("initial connection error:",err)
 	}
 
-	var commandFlag uint32=CLIENT_FILE
+	var commandFlag uint32=connectionManager.CLIENT_FILE
 	fileName:="00" +
 		"0"
 	buffer:=make([]byte,4,4+len(fileName))
 
- //https://studygolang.com/articles/4350
+ //https://studygolang.com/articles/4350  http://blog.csdn.net/erlib
 	buffer=append(buffer, byte(commandFlag))
 	//十个字节的保留字段
 	buffer=append(buffer,0,0,0,0,0,0,0,0,0,0)

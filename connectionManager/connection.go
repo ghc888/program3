@@ -8,12 +8,6 @@ import (
 	"encoding/binary"
 	"bytes"
 )
-const (
-
-	CLIENT_LONG_PASSWORD uint32 = 1 << iota
-	CLIENT_FILE
-	CLIENT_REGISTER
-)
 
 
 type ClientConn struct {
@@ -77,27 +71,28 @@ func (c *ClientConn)ReadHandshakeResponse()error{
 		fmt.Println("read handshake response error:",err)
 	}
 
-	pos:=0
-	command:=binary.LittleEndian.Uint32(data[:4])
- 	//command:=binary.LittleEndian.Uint32(data[:4])
- 	if command&CLIENT_FILE>0{
-		fmt.Println("file command")
-	}else if command&CLIENT_REGISTER>0{
-		fmt.Println("register command")
-	}else {
-		fmt.Println("unknown command")
-	}
 
-
-
-
-
-	pos+=1
-	fmt.Println(data[pos:])
-	fmt.Println(bytes.IndexByte(data[pos:],0)+pos)
-	//filename := string(data[pos : pos+bytes.IndexByte(data[pos:], 0)])
-	//fmt.Println("filename :",filename)
+	//pos:=0
+	//command:=binary.LittleEndian.Uint32(data[:4])
+ 	////command:=binary.LittleEndian.Uint32(data[:4])
+ 	//if command&CLIENT_FILE>0{
+	//	fmt.Println("file command")
+	//}else if command&CLIENT_REGISTER>0{
+	//	fmt.Println("register command")
+	//}else {
+	//	fmt.Println("unknown command")
+	//}
+	//
+	//
+	//
+	//
+	//
+	//pos+=1
 	//fmt.Println(data[pos:])
+	//fmt.Println(bytes.IndexByte(data[pos:],0)+pos)
+	////filename := string(data[pos : pos+bytes.IndexByte(data[pos:], 0)])
+	////fmt.Println("filename :",filename)
+	////fmt.Println(data[pos:])
 	return  nil
 
 }
