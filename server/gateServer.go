@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/satori/go.uuid"
 	"net"
+	"program3/connectionManager"
 )
 
 
@@ -43,11 +44,16 @@ func GateServer(){
 /*
 分发client的request messge type
 */
-func HandleConn(conn net.Conn) error {
+func HandleConn(co net.Conn) error {
 	u1:=uuid.NewV4()
-	fmt.Println("accept request message from client:",conn.RemoteAddr()," room id:",u1)
+	fmt.Println("accept request message from client:",co.RemoteAddr()," room id:",u1)
+	conn,err:=connectionManager.NewConn(co)
+	if err!=nil{
+		fmt.Println("inital client connecetion error:",err)
+	}
 
 
-
+	//conn.WriteHandShake()
+	conn.ReadHandshakeResponse()
 	return nil
 }
