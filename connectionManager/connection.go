@@ -5,10 +5,7 @@ import (
 	"program3/protocol"
 	"fmt"
 	"sync/atomic"
-
-
 	"encoding/binary"
-
 	"bytes"
 )
 const (
@@ -95,12 +92,13 @@ func (c *ClientConn)ReadHandshakeResponse()error{
 
 
 
-	pos+=4
-
-	 //filename := string(data[pos : pos+bytes.IndexByte(data[pos:], 0)])
+	pos+=1
 	fmt.Println(data[pos:])
-	fmt.Println(bytes.IndexByte(data[pos:], 0))
-	fmt.Println("filename :",string(data[pos:]))
+	fmt.Println(bytes.IndexByte(data[pos:],0)+pos)
+	//filename := string(data[pos : pos+bytes.IndexByte(data[pos:], 0)])
+	//fmt.Println("filename :",filename)
+	//fmt.Println(data[pos:])
 	return  nil
+
 }
 

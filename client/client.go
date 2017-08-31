@@ -27,11 +27,14 @@ func main() {
 	}
 
 	var commandFlag uint32=CLIENT_FILE
-	fileName:="1.txt"
+	fileName:="00" +
+		"0"
 	buffer:=make([]byte,4,4+len(fileName))
 
-
+ //https://studygolang.com/articles/4350
 	buffer=append(buffer, byte(commandFlag))
+	//十个字节的保留字段
+	buffer=append(buffer,0,0,0,0,0,0,0,0,0,0)
 	buffer=append(buffer,fileName...)
 	fmt.Println(buffer)
 

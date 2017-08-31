@@ -17,7 +17,7 @@ import (
 func GateServer(){
 
 
-	config,err:=config.ParseConfigFile("/etc/1.yaml")
+	config,err:=config.ParseConfigFile("/Users/ghc/go/src/program3/etc/1.yaml")
 	if err!=nil{
 		fmt.Println("parse config file error:",err)
 	}
