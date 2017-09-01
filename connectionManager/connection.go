@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"sync/atomic"
 	"sync"
-
 	"log"
 	"encoding/json"
 )
@@ -17,16 +16,12 @@ type ClientConn struct {
 	Pkg *protocol.PacketIO
 
 	connectionId uint32
-	//capability uint32
-
 
 	wg         sync.WaitGroup
 	mutex      sync.Mutex
 }
 
-
 var baseConnId uint32 = 10000
-
 
 /*
 初始化一个连接对象
@@ -82,6 +77,10 @@ func (c *ClientConn)ReadHandshakeResponse()error{
 	command:=data[pos]
 	pos++
 
+	fmt.Println(command&protocol.REGISTER)
+	fmt.Println(command&protocol.FILE)
+
+
 	if command&protocol.FILE >0{
 		fmt.Println("file type command")
 		var file_info protocol.FileType
@@ -101,6 +100,7 @@ func (c *ClientConn)ReadHandshakeResponse()error{
 		}
 		fmt.Println(register)
 	}
+
 
 	return  nil
 

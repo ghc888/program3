@@ -16,6 +16,7 @@ func GateServer(){
 
 
 	cfg,err:=config.ParseConfigFile("/home/yoda/go/src/program3/etc/1.yaml")
+
 	if err!=nil{
 		fmt.Println("parse config file error:",err)
 	}
@@ -23,6 +24,7 @@ func GateServer(){
 	lisAddr:=cfg.Addr
 
 	tcpaddr,_:=net.ResolveTCPAddr("tcp",lisAddr)
+
 	listener,err:=net.ListenTCP("tcp",tcpaddr)
 	if err!=nil{
 		fmt.Println("listen error:",err)
