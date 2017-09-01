@@ -5,8 +5,10 @@ import (
 	"program3/protocol"
 	"fmt"
 	"sync/atomic"
-	"encoding/binary"
-	"bytes"
+	"sync"
+
+	"log"
+	"encoding/json"
 )
 
 
@@ -16,6 +18,10 @@ type ClientConn struct {
 
 	connectionId uint32
 	//capability uint32
+
+
+	wg         sync.WaitGroup
+	mutex      sync.Mutex
 }
 
 
@@ -72,27 +78,30 @@ func (c *ClientConn)ReadHandshakeResponse()error{
 	}
 
 
-	//pos:=0
-	//command:=binary.LittleEndian.Uint32(data[:4])
- 	////command:=binary.LittleEndian.Uint32(data[:4])
- 	//if command&CLIENT_FILE>0{
-	//	fmt.Println("file command")
-	//}else if command&CLIENT_REGISTER>0{
-	//	fmt.Println("register command")
-	//}else {
-	//	fmt.Println("unknown command")
-	//}
-	//
-	//
-	//
-	//
-	//
-	//pos+=1
-	//fmt.Println(data[pos:])
-	//fmt.Println(bytes.IndexByte(data[pos:],0)+pos)
-	////filename := string(data[pos : pos+bytes.IndexByte(data[pos:], 0)])
-	////fmt.Println("filename :",filename)
-	////fmt.Println(data[pos:])
+	pos:=0
+	command:=data[pos]
+	pos++
+
+	if command&protocol.FILE >0{
+		fmt.Println("file type command")
+		var file_info protocol.FileType
+
+		err=json.Unmarshal(data[pos:],&file_info)
+		if err != nil {
+			log.Fatal("decode:", err)
+		}
+		fmt.Println(file_info)
+	}else if command&protocol.REGISTER>0{
+		fmt.Println("register type command")
+		var register protocol.RegisterType
+
+		err=json.Unmarshal(data[pos:],&register)
+		if err != nil {
+			log.Fatal("decode:", err)
+		}
+		fmt.Println(register)
+	}
+
 	return  nil
 
 }

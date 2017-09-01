@@ -4,8 +4,6 @@ package server
 接入控制
 */
 import (
-
-
 	"program3/config"
 	"fmt"
 	"github.com/satori/go.uuid"
@@ -17,7 +15,7 @@ import (
 func GateServer(){
 
 
-	config,err:=config.ParseConfigFile("/Users/ghc/go/src/program3/etc/1.yaml")
+	config,err:=config.ParseConfigFile("/home/yoda/go/src/program3/etc/1.yaml")
 	if err!=nil{
 		fmt.Println("parse config file error:",err)
 	}

@@ -1,37 +1,59 @@
 package main
 
 import (
-
 	"fmt"
 	"net"
 	"program3/connectionManager"
+	"program3/protocol"
+	"encoding/json"
 )
 
+func SendFileJob(conn *connectionManager.ClientConn)  {
+
+	fileinfo := protocol.FileType{Name: "/tmp/1.txt", Size:100}
+	message,err:=json.Marshal(fileinfo)
+
+	if err != nil {
+		fmt.Println("json marshal fileinfo error:", err)
+	}
+
+	buffer := make([]byte, 4, 1+len(message) )
+
+	buffer = append(buffer, protocol.FILE)
+	buffer = append(buffer, message...)
+
+	conn.Pkg.WritePacket(buffer)
+}
+func RegisterJob(conn *connectionManager.ClientConn)  {
+
+	register := protocol.RegisterType{Mid: "201707151127586", Project:"1500017519"}
+	message,err:=json.Marshal(register)
+
+	if err != nil {
+		fmt.Println("json marshal fileinfo error:", err)
+	}
+
+	buffer := make([]byte, 4, 1+len(message) )
+
+	buffer = append(buffer, protocol.REGISTER)
+	buffer = append(buffer, message...)
+
+	conn.Pkg.WritePacket(buffer)
+}
 
 func main() {
 
-	con,err:=net.Dial("tcp",":9696")
-	if err!=nil{
-		fmt.Println("connection server error:",err)
+	con, err := net.Dial("tcp", ":9696")
+	if err != nil {
+		fmt.Println("connection server error:", err)
 	}
 
-	conn,err:=connectionManager.NewConn(con)
-	if err!=nil{
-		fmt.Println("initial connection error:",err)
+	conn, err := connectionManager.NewConn(con)
+	if err != nil {
+		fmt.Println("initial connection error:", err)
 	}
 
-	var commandFlag uint32=connectionManager.CLIENT_FILE
-	fileName:="00" +
-		"0"
-	buffer:=make([]byte,4,4+len(fileName))
 
- //https://studygolang.com/articles/4350  http://blog.csdn.net/erlib
-	buffer=append(buffer, byte(commandFlag))
-	//十个字节的保留字段
-	buffer=append(buffer,0,0,0,0,0,0,0,0,0,0)
-	buffer=append(buffer,fileName...)
-	fmt.Println(buffer)
-
-	conn.Pkg.WritePacket(buffer)
-	 fmt.Println("hello client")
+	//SendFileJob(conn)
+	RegisterJob(conn)
 }
