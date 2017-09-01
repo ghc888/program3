@@ -19,8 +19,9 @@ const (
 )
 
 type FileType struct {
-	Name string
-	Size int
+	Id int	//id 文件id标识
+	Name string //文件名
+	Path string //文件绝对路径名
 }
 
 type RegisterType struct {

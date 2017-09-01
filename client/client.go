@@ -8,9 +8,9 @@ import (
 	"encoding/json"
 )
 
-func SendFileJob(conn *connectionManager.ClientConn)  {
+func RequestFileJob(conn *connectionManager.ClientConn)  {
 
-	fileinfo := protocol.FileType{Name: "/tmp/1.txt", Size:100}
+	fileinfo := protocol.FileType{Name: "1.txt", Id:100,Path:"/tmp/"}
 	message,err:=json.Marshal(fileinfo)
 
 	if err != nil {
@@ -54,6 +54,6 @@ func main() {
 	}
 
 
-	//SendFileJob(conn)
-	RegisterJob(conn)
+	RequestFileJob(conn)
+	//RegisterJob(conn)
 }

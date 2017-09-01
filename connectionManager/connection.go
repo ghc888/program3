@@ -61,6 +61,31 @@ func (c *ClientConn)WriteHandShake() error{
 	return  c.Pkg.WritePacket(buf)
 }
 
+func ParseFileCommand(data []byte) error  {
+
+	fmt.Println("file type command")
+	var file_info protocol.FileType
+
+	err:=json.Unmarshal(data,&file_info)
+	if err != nil {
+		log.Fatal("decode:", err)
+	}
+	fmt.Println(file_info)
+	return nil
+}
+func ParseRegisterCommand(data []byte) error  {
+
+	fmt.Println("file type command")
+	var register protocol.RegisterType
+
+	err:=json.Unmarshal(data,&register)
+	if err != nil {
+		log.Fatal("decode:", err)
+	}
+	fmt.Println(register)
+	return nil
+}
+
 /*
 读取握手信息反馈包
 4:command
@@ -77,28 +102,10 @@ func (c *ClientConn)ReadHandshakeResponse()error{
 	command:=data[pos]
 	pos++
 
-	fmt.Println(command&protocol.REGISTER)
-	fmt.Println(command&protocol.FILE)
-
-
 	if command&protocol.FILE >0{
-		fmt.Println("file type command")
-		var file_info protocol.FileType
-
-		err=json.Unmarshal(data[pos:],&file_info)
-		if err != nil {
-			log.Fatal("decode:", err)
-		}
-		fmt.Println(file_info)
+		ParseFileCommand(data[pos:])
 	}else if command&protocol.REGISTER>0{
-		fmt.Println("register type command")
-		var register protocol.RegisterType
-
-		err=json.Unmarshal(data[pos:],&register)
-		if err != nil {
-			log.Fatal("decode:", err)
-		}
-		fmt.Println(register)
+		ParseRegisterCommand(data[pos:])
 	}
 
 
