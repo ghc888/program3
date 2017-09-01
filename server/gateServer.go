@@ -6,7 +6,7 @@ package server
 import (
 	"program3/config"
 	"fmt"
-	"github.com/satori/go.uuid"
+ 	"program3/tools"
 	"net"
 	"program3/connectionManager"
 )
@@ -15,12 +15,12 @@ import (
 func GateServer(){
 
 
-	config,err:=config.ParseConfigFile("/home/yoda/go/src/program3/etc/1.yaml")
+	cfg,err:=config.ParseConfigFile("/home/yoda/go/src/program3/etc/1.yaml")
 	if err!=nil{
 		fmt.Println("parse config file error:",err)
 	}
 
-	lisAddr:=config.Addr
+	lisAddr:=cfg.Addr
 
 	tcpaddr,_:=net.ResolveTCPAddr("tcp",lisAddr)
 	listener,err:=net.ListenTCP("tcp",tcpaddr)
@@ -43,7 +43,7 @@ func GateServer(){
 分发client的request messge type
 */
 func HandleConn(co net.Conn) error {
-	u1:=uuid.NewV4()
+	u1:=tools.Getuid()
 	fmt.Println("accept request message from client:",co.RemoteAddr()," room id:",u1)
 	conn,err:=connectionManager.NewConn(co)
 	if err!=nil{

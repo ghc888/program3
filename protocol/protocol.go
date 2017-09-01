@@ -22,19 +22,15 @@ server <-- client
 type PacketIO struct {
 	rb *bufio.Reader
 	wb io.Writer
-
 	Sequence uint8
 }
 
 
 func NewPacketIO(conn net.Conn) *PacketIO {
 	p := new(PacketIO)
-
 	p.rb = bufio.NewReaderSize(conn, defaultReaderSize)
 	p.wb = conn
-
 	p.Sequence = 0
-
 	return p
 }
 
